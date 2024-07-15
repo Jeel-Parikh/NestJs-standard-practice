@@ -5,8 +5,12 @@ import { ENV_VARIABLES } from './config/env.config';
 
 async function bootstrap() {
   try {
-    const app = await NestFactory.create(AppModule);
-    app.setGlobalPrefix('api');
+    const app = await NestFactory.create(AppModule, {
+      cors: true, // allow all origin all types of http req
+    });
+
+    app.setGlobalPrefix('api'); // add prefix in all http routes
+
     app.enableVersioning({
       type: VersioningType.URI,
     });
