@@ -6,7 +6,7 @@
   "license": "ISC",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write --ignore-unknown \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -20,9 +20,9 @@
     "prepare": "husky || true"
   },
   "lint-staged": {
-    "**/*": [
-      "npm run format",
-      "npm run lint"
+    "**/*.{ts,js}": [
+      "npm run lint",
+      "npm run format"
     ]
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "morgan": "^1.10.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
@@ -47,6 +48,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^9.0.11",
     "jest": "^29.5.0",

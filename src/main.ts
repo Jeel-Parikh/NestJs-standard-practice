@@ -1,5 +1,6 @@
-import { NestFactory } from '@nestjs/core';
 import { Logger, VersioningType } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+
 import { AppModule } from './app.module';
 import { ENV_VARIABLES } from './config/env.config';
 
