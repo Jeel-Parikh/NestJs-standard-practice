@@ -1,5 +1,9 @@
-import { Logger, VersioningType } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as compression from 'compression';
+import * as cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import * as logger from 'morgan';
 
 import { AppModule } from './app.module';
 import { ENV_VARIABLES } from './config/env.config';
@@ -15,6 +19,18 @@ async function bootstrap() {
     app.enableVersioning({
       type: VersioningType.URI,
     });
+
+    app.use(helmet()); //
+
+    app.use(compression({}));
+
+    app.use(cookieParser()); //  parsing and using cookie functionality using req & res Objects
+
+    app.use(logger('dev')); //  Logging http-api calls
+
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+    // This will apply validation for all route. whitelist option is for to remove unwanted obj property not in dto
+
     const port = ENV_VARIABLES.PORT || 3000;
     await app.listen(port);
     Logger.log(`Listing on port: ${port}`, 'MAIN');
