@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import * as logger from 'morgan';
 
 import { AppModule } from './app.module';
-import { ENV_VARIABLES } from './config/env.config';
+import { ENV_VARIABLES } from './config';
 
 async function bootstrap() {
   try {
@@ -20,7 +20,7 @@ async function bootstrap() {
       type: VersioningType.URI,
     });
 
-    app.use(helmet()); //
+    app.use(helmet()); // will add general security header
 
     app.use(compression({}));
 
