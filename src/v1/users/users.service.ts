@@ -1,27 +1,94 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { encryptPassword } from './../../helpers/password.helper';
+import { ConditionUserDtoV1 } from './dto';
+import { CreateUserDtoV1 } from './dto/create-user.dto';
+import { UpdateUserDtoV1 } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersServiceV1 {
-  create(_createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
+
+  async create(createUserDto: CreateUserDtoV1) {
+    try {
+      createUserDto.userPassword = await encryptPassword(
+        createUserDto.userPassword,
+      );
+      const user = this.usersRepository.create(createUserDto);
+      await this.usersRepository.save(user);
+      return user;
+    } catch (err) {
+      throw new BadRequestException(err.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(conditions: ConditionUserDtoV1 = {}) {
+    try {
+      const users = await this.usersRepository.find({
+        where: conditions,
+      });
+      return users;
+    } catch (err) {
+      throw new BadRequestException(err.message);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(conditions: ConditionUserDtoV1) {
+    try {
+      const user = await this.usersRepository.findOneByOrFail(conditions);
+      return user;
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 
-  update(id: number, _updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(conditions: ConditionUserDtoV1, updateUserDto: UpdateUserDtoV1) {
+    try {
+      if (updateUserDto.userPassword) {
+        updateUserDto.userPassword = await encryptPassword(
+          updateUserDto.userPassword,
+        );
+      }
+      const updatedRes = await this.usersRepository.update(
+        conditions,
+        updateUserDto,
+      );
+      if (!updatedRes.affected) {
+        throw new NotFoundException('Invalid user');
+      }
+      return updatedRes;
+    } catch (err) {
+      throw new HttpException(
+        err.response || err.message,
+        err.status || HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(conditions: ConditionUserDtoV1) {
+    try {
+      const users = await this.findAll(conditions);
+      if (!users.length) {
+        throw new NotFoundException('Invalid user');
+      }
+      const deletedUsers = await this.usersRepository.remove(users);
+      return deletedUsers;
+    } catch (err) {
+      throw new HttpException(
+        err.response || err.message,
+        err.status || HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

@@ -1,1 +1,1 @@
-export * from './encryptPassword.helper';
+export * from './password.helper';
