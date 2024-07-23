@@ -22,6 +22,14 @@ export class UsersServiceV1 {
 
   async create(createUserDto: CreateUserDtoV1) {
     try {
+      const isExist = await this.exists({
+        userEmail: createUserDto.userEmail,
+      });
+      if (isExist) {
+        throw new BadRequestException(
+          'User is already registered with same email',
+        );
+      }
       createUserDto.userPassword = await encryptPassword(
         createUserDto.userPassword,
       );
@@ -49,7 +57,7 @@ export class UsersServiceV1 {
       const user = await this.usersRepository.findOneByOrFail(conditions);
       return user;
     } catch (err) {
-      throw new NotFoundException(err.message);
+      throw new NotFoundException('Invalid user data');
     }
   }
 
@@ -67,7 +75,8 @@ export class UsersServiceV1 {
       if (!updatedRes.affected) {
         throw new NotFoundException('Invalid user');
       }
-      return updatedRes;
+      const users = await this.findAll(conditions);
+      return users;
     } catch (err) {
       throw new HttpException(
         err.response || err.message,
@@ -90,5 +99,10 @@ export class UsersServiceV1 {
         err.status || HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  async exists(conditions: ConditionUserDtoV1) {
+    const isExists = await this.usersRepository.existsBy(conditions);
+    return isExists;
   }
 }
