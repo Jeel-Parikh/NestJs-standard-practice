@@ -7,11 +7,12 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 
-import { Serializer } from './../../common/interceptors/serialize.interceptor';
+import { Serializer } from './../../common/interceptors';
 import { genResponse } from './../../helpers';
-import { ResUserDtoV1 } from './dto';
+import { QueryParamsUserDtoV1, ResUserDtoV1 } from './dto';
 import { CreateUserDtoV1 } from './dto/create-user.dto';
 import { UpdateUserDtoV1 } from './dto/update-user.dto';
 import { UsersServiceV1 } from './users.service';
@@ -28,8 +29,13 @@ export class UsersControllerV1 {
   }
 
   @Get()
-  async findAll() {
-    const users = await this.usersService.findAll();
+  async findAll(@Query() query: QueryParamsUserDtoV1) {
+    const { offset = 0, limit = 10, ...conditions } = query;
+
+    const users = await this.usersService.findAll(conditions, {
+      limit,
+      offset,
+    });
     return genResponse(users, 'users fetched successfully');
   }
 

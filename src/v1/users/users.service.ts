@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { IPaginationParams } from './../../common/interfaces';
 import { encryptPassword } from './../../helpers/password.helper';
 import { ConditionUserDtoV1 } from './dto';
 import { CreateUserDtoV1 } from './dto/create-user.dto';
@@ -41,10 +42,16 @@ export class UsersServiceV1 {
     }
   }
 
-  async findAll(conditions: ConditionUserDtoV1 = {}) {
+  async findAll(
+    conditions: ConditionUserDtoV1 = {},
+    pagination: IPaginationParams = {},
+  ) {
     try {
+      // add total count in response
       const users = await this.usersRepository.find({
         where: conditions,
+        skip: pagination.offset,
+        take: pagination.limit,
       });
       return users;
     } catch (err) {
