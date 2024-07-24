@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import { Serializer } from './../../common/interceptors';
@@ -16,8 +17,10 @@ import { QueryParamsUserDtoV1, ResUserDtoV1 } from './dto';
 import { CreateUserDtoV1 } from './dto/create-user.dto';
 import { UpdateUserDtoV1 } from './dto/update-user.dto';
 import { UsersServiceV1 } from './users.service';
+import { AuthGuardV1 } from '../auth/guards';
 
 @Serializer(ResUserDtoV1)
+@UseGuards(AuthGuardV1)
 @Controller({ path: 'users', version: '1' })
 export class UsersControllerV1 {
   constructor(private readonly usersService: UsersServiceV1) {}
@@ -31,7 +34,6 @@ export class UsersControllerV1 {
   @Get()
   async findAll(@Query() query: QueryParamsUserDtoV1) {
     const { offset = 0, limit = 10, ...conditions } = query;
-
     const users = await this.usersService.findAll(conditions, {
       limit,
       offset,
