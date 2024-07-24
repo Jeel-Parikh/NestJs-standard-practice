@@ -8,11 +8,11 @@ export const encryptPassword = async (password: string) => {
 
 export const comparePassword = async (
   password: string,
-  correctPassword: string,
+  userPassword: string,
 ) => {
   try {
-    return await bcrypt.compare(password, correctPassword);
+    return await bcrypt.compare(password, userPassword);
   } catch (err) {
-    throw new BadRequestException('Invalid Email or password');
+    throw new BadRequestException('Invalid data');
   }
 };

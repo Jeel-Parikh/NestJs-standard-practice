@@ -14,6 +14,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   logging: false,
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
-};
+} as const;
 
 export const AppDataSource = new DataSource(typeOrmConfig as DataSourceOptions);

@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsSelect, Repository } from 'typeorm';
 
 import { IPaginationParams } from './../../common/interfaces';
 import { encryptPassword } from './../../helpers/password.helper';
@@ -59,12 +59,18 @@ export class UsersServiceV1 {
     }
   }
 
-  async findOne(conditions: ConditionUserDtoV1) {
+  async findOne(
+    conditions: ConditionUserDtoV1,
+    select: FindOptionsSelect<User> = {},
+  ) {
     try {
-      const user = await this.usersRepository.findOneByOrFail(conditions);
+      const user = await this.usersRepository.findOneOrFail({
+        where: conditions,
+        select,
+      });
       return user;
     } catch (err) {
-      throw new NotFoundException('Invalid user data');
+      throw new NotFoundException('Invalid data');
     }
   }
 

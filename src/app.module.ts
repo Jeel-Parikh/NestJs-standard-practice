@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { throttlerConfig } from './config';
-import { typeOrmConfig } from './config/typeorm.config';
+import { jwtConfig, throttlerConfig, typeOrmConfig } from './config';
 import { V1Module } from './v1/v1.module';
 
 @Module({
@@ -14,6 +14,7 @@ import { V1Module } from './v1/v1.module';
     V1Module,
     ThrottlerModule.forRoot(throttlerConfig),
     TypeOrmModule.forRoot(typeOrmConfig),
+    JwtModule.register(jwtConfig),
   ],
   controllers: [AppController],
   providers: [

@@ -22,7 +22,7 @@ export class User {
   @IsEmail(undefined, { message: 'userEmail must be an email' })
   userEmail: string;
 
-  @Column({ select: false })
+  @Column()
   @MinLength(5, {
     message: 'userPassword must be longer than or equal to 5 characters',
   })

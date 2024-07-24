@@ -16,4 +16,4 @@ export const throttlerConfig: ThrottlerModuleOptions = [
     ttl: 60000,
     limit: 250,
   },
-];
+] as const;
