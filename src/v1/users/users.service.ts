@@ -50,10 +50,12 @@ export class UsersServiceV1 {
       // add total count in response
       const users = await this.usersRepository.find({
         where: conditions,
+        order: { id: 'ASC' },
         skip: pagination.offset,
         take: pagination.limit,
       });
-      return users;
+      const count = await this.usersRepository.count();
+      return { users, count };
     } catch (err) {
       throw new BadRequestException(err.message);
     }
@@ -88,8 +90,8 @@ export class UsersServiceV1 {
       if (!updatedRes.affected) {
         throw new NotFoundException('Invalid user');
       }
-      const users = await this.findAll(conditions);
-      return users;
+      const data = await this.findAll(conditions);
+      return data.users;
     } catch (err) {
       throw new HttpException(
         err.response || err.message,
@@ -100,7 +102,7 @@ export class UsersServiceV1 {
 
   async remove(conditions: ConditionUserDtoV1) {
     try {
-      const users = await this.findAll(conditions);
+      const { users } = await this.findAll(conditions);
       if (!users.length) {
         throw new NotFoundException('Invalid user');
       }

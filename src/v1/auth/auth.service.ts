@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ENV_VARIABLES } from './../../config';
 import { comparePassword } from './../../helpers/password.helper';
 import { LoginAuthDtoV1 } from './dto/login-auth.dto';
+import { ResLoginDtoV1 } from './dto/res-login.dto';
 import { UsersServiceV1 } from '../users/users.service';
 
 @Injectable()
@@ -35,7 +36,7 @@ export class AuthServiceV1 {
       return {
         ...user,
         accessToken,
-      };
+      } as unknown as ResLoginDtoV1;
     } catch (err) {
       throw new UnauthorizedException('Invalid data');
     }

@@ -1,3 +1,3 @@
-export function genResponse(data: object, message: string) {
-  return { data, message };
+export function genResponse<T>(resData: T) {
+  return resData;
 }

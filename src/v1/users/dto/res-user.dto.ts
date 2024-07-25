@@ -11,4 +11,6 @@ export class ResUserDtoV1 extends User {
 
   @Exclude()
   updatedAt: Date;
+
+  count: number;
 }

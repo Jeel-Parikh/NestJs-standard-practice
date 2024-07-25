@@ -26,16 +26,18 @@ class SerializeInterceptor implements NestInterceptor {
         const res: Response = context.switchToHttp().getResponse();
         const statusCode = res.statusCode;
         const message = resData.message;
+        const meta = resData.meta;
         let data = plainToInstance(this.schema, resData.data, {
           exposeUnsetFields: true,
         });
         if (!Array.isArray(data)) {
-          data = [data];
+          data = data;
         }
         return {
           statusCode,
           message,
           data,
+          meta,
         };
       }),
     );
