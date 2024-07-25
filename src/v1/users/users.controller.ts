@@ -1,3 +1,4 @@
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
   Controller,
   Get,
@@ -8,6 +9,7 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { Serializer } from './../../common/interceptors';
@@ -23,6 +25,7 @@ import { AuthenticationV1, RoleV1 } from '../auth/decorators';
 // @RoleV1(EUsersRole.ADMIN)  // Always place @Role above @Authentication bcz it is depends on @Authentication
 @AuthenticationV1() // Authentication decorator
 @Controller({ path: 'users', version: '1' })
+@UseInterceptors(CacheInterceptor) // Only GET endpoints are cached
 export class UsersControllerV1 {
   constructor(private readonly usersService: UsersServiceV1) {}
 
