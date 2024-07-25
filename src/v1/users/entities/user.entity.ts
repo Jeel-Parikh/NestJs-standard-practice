@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, MinLength } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import { EUsersRole } from '../types/user.type';
 
 @Entity()
 export class User {
@@ -29,9 +31,10 @@ export class User {
   @IsNotEmpty({ message: 'userPassword should not be empty' })
   userPassword: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: EUsersRole, default: EUsersRole.USER })
   @IsNotEmpty({ message: 'userRole should not be empty' })
-  userRole: string; // create separate role type
+  @IsEnum(EUsersRole)
+  userRole: EUsersRole;
 
   @CreateDateColumn()
   createdAt: Date;

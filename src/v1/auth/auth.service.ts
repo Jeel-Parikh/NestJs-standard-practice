@@ -64,7 +64,7 @@ export class AuthServiceV1 {
       });
       return payload;
     } catch (err) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid token');
     }
   }
 
@@ -89,7 +89,7 @@ export class AuthServiceV1 {
       );
       return payload;
     } catch (err) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(err.message);
     }
   }
 }

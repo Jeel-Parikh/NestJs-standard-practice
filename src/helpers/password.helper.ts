@@ -1,8 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-export const encryptPassword = async (password: string) => {
-  const encPassword = await bcrypt.hash(password, 12);
+import { ENV_VARIABLES } from '../config';
+
+export const hashPassword = async (password: string) => {
+  const encPassword = await bcrypt.hash(
+    password,
+    ENV_VARIABLES.BCRYPT_SALT_ROUND,
+  );
   return encPassword;
 };
 

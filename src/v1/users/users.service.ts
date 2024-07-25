@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsSelect, Repository } from 'typeorm';
 
 import { IPaginationParams } from './../../common/interfaces';
-import { encryptPassword } from './../../helpers/password.helper';
+import { hashPassword } from './../../helpers/password.helper';
 import { ConditionUserDtoV1 } from './dto';
 import { CreateUserDtoV1 } from './dto/create-user.dto';
 import { UpdateUserDtoV1 } from './dto/update-user.dto';
@@ -31,7 +31,7 @@ export class UsersServiceV1 {
           'User is already registered with same email',
         );
       }
-      createUserDto.userPassword = await encryptPassword(
+      createUserDto.userPassword = await hashPassword(
         createUserDto.userPassword,
       );
       const user = this.usersRepository.create(createUserDto);
@@ -77,7 +77,7 @@ export class UsersServiceV1 {
   async update(conditions: ConditionUserDtoV1, updateUserDto: UpdateUserDtoV1) {
     try {
       if (updateUserDto.userPassword) {
-        updateUserDto.userPassword = await encryptPassword(
+        updateUserDto.userPassword = await hashPassword(
           updateUserDto.userPassword,
         );
       }
