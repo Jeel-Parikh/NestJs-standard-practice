@@ -48,13 +48,12 @@ export class UsersServiceV1 {
   ) {
     try {
       // add total count in response
-      const users = await this.usersRepository.find({
+      const [users, count] = await this.usersRepository.findAndCount({
         where: conditions,
         order: { id: 'ASC' },
         skip: pagination.offset,
         take: pagination.limit,
       });
-      const count = await this.usersRepository.count();
       return { users, count };
     } catch (err) {
       throw new BadRequestException(err.message);
@@ -102,8 +101,8 @@ export class UsersServiceV1 {
 
   async remove(conditions: ConditionUserDtoV1) {
     try {
-      const { users } = await this.findAll(conditions);
-      if (!users.length) {
+      const { users, count } = await this.findAll(conditions);
+      if (!count) {
         throw new NotFoundException('Invalid user');
       }
       const deletedUsers = await this.usersRepository.remove(users);
