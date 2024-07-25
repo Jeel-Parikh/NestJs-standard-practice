@@ -1,7 +1,7 @@
 import { CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-store';
 
-import { ENV_VARIABLES } from './env.config';
+import { ENV_VARIABLES } from '@/src/config';
 
 export const cacheConfig: CacheModuleAsyncOptions = {
   isGlobal: true,

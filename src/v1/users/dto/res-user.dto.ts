@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 
-import { User } from '../entities/user.entity';
+import { User } from '@/src/v1/users/entities/user.entity';
 
 export class ResUserDtoV1 extends User {
   @Exclude()

@@ -5,11 +5,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { jwtConfig, throttlerConfig, typeOrmConfig } from './config';
-import { cacheConfig } from './config/cache.config';
-import { V1Module } from './v1/v1.module';
+import { AppController } from '@/src/app.controller';
+import { AppService } from '@/src/app.service';
+import { jwtConfig, throttlerConfig, typeOrmConfig } from '@/src/config';
+import { cacheConfig } from '@/src/config/cache.config';
+import { V1Module } from '@/src/v1/v1.module';
 
 @Module({
   imports: [

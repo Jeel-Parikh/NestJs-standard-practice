@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { EUsersRole } from '../types/user.type';
+import { EUsersRole } from '@/src/v1/users/types/user.type';
 
 @Entity()
 export class User {

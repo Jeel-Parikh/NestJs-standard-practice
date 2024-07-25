@@ -8,12 +8,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsSelect, Repository } from 'typeorm';
 
-import { IPaginationParams } from './../../common/interfaces';
-import { hashPassword } from './../../helpers/password.helper';
-import { ConditionUserDtoV1 } from './dto';
-import { CreateUserDtoV1 } from './dto/create-user.dto';
-import { UpdateUserDtoV1 } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { IPaginationParams } from '@/src/common/interfaces';
+import { hashPassword } from '@/src/helpers';
+import {
+  ConditionUserDtoV1,
+  CreateUserDtoV1,
+  UpdateUserDtoV1,
+} from '@/src/v1/users/dto';
+import { User } from '@/src/v1/users/entities/user.entity';
 
 @Injectable()
 export class UsersServiceV1 {

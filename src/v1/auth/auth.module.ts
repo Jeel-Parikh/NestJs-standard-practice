@@ -1,8 +1,8 @@
 import { Global, Module } from '@nestjs/common';
 
-import { AuthControllerV1 } from './auth.controller';
-import { AuthServiceV1 } from './auth.service';
-import { UsersModule } from '../users/users.module';
+import { AuthControllerV1 } from '@/src/v1/auth/auth.controller';
+import { AuthServiceV1 } from '@/src/v1/auth/auth.service';
+import { UsersModule } from '@/src/v1/users/users.module';
 
 @Global()
 @Module({

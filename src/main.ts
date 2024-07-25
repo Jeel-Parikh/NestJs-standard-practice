@@ -5,8 +5,8 @@ import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import * as logger from 'morgan';
 
-import { AppModule } from './app.module';
-import { ENV_VARIABLES } from './config';
+import { AppModule } from '@/src/app.module';
+import { ENV_VARIABLES } from '@/src/config';
 
 async function bootstrap() {
   try {

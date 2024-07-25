@@ -1,12 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 
-import { EUsersRole } from '../../users/types/user.type';
+import { EUsersRole } from '@/src/v1/users/types/user.type';
 
-// export const ROLES_KEY = 'roles';
-// // Decorator
-// export const Roles = (...roles: EUsersRole[]) => SetMetadata(ROLES_KEY, roles);
-
-// Guard
 @Injectable()
 export class RolesGuardV1 implements CanActivate {
   constructor(
@@ -15,10 +10,6 @@ export class RolesGuardV1 implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // const requiredRoles = this.reflector.getAllAndOverride<EUsersRole[]>(
-    //   ROLES_KEY,
-    //   [context.getHandler(), context.getClass()],
-    // );
     if (!this.requiredRoles) {
       return true;
     }

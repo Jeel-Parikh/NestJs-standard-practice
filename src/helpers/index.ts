@@ -1,1 +1,1 @@
-export * from './password.helper';
+export * from '@/src/helpers/password.helper';

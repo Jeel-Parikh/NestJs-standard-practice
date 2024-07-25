@@ -5,11 +5,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { ENV_VARIABLES } from './../../config';
-import { comparePassword } from './../../helpers/password.helper';
-import { LoginAuthDtoV1 } from './dto/login-auth.dto';
-import { ResLoginDtoV1 } from './dto/res-login.dto';
-import { UsersServiceV1 } from '../users/users.service';
+import { ENV_VARIABLES } from '@/src/config';
+import { comparePassword } from '@/src/helpers';
+import { LoginAuthDtoV1, ResLoginDtoV1 } from '@/src/v1/auth/dto';
+import { UsersServiceV1 } from '@/src/v1/users/users.service';
 
 @Injectable()
 export class AuthServiceV1 {

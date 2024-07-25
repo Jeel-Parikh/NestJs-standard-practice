@@ -1,4 +1,4 @@
-import { IResponse } from './default-res.interface';
+import { IResponse } from '@/src/common/interfaces';
 
 export interface IPaginationRes<T> extends IResponse<T> {
   meta: {

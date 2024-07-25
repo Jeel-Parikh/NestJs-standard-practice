@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 
-import { userSeeder } from './user.seed';
-import { AppDataSource } from '../config';
+import { AppDataSource } from '@/src/config';
+import { userSeeder } from '@/src/seeders/user.seed';
 
 async function runSeeder() {
   try {

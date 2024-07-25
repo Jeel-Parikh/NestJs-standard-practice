@@ -1,8 +1,9 @@
 import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 
-import { IPaginationParams } from './../../../common/interfaces';
-import { ConditionUserDtoV1 } from './condition-user.dto';
+import { IPaginationParams } from '@/src/common/interfaces';
+import { ConditionUserDtoV1 } from '@/src/v1/users/dto';
+
 export class QueryParamsUserDtoV1
   extends ConditionUserDtoV1
   implements IPaginationParams

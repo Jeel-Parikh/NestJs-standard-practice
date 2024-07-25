@@ -1,11 +1,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
 
+import { Serializer } from '@/src/common/interceptors';
 import { IResponse } from '@/src/common/interfaces';
-
-import { Serializer } from './../../common/interceptors';
-import { AuthServiceV1 } from './auth.service';
-import { LoginAuthDtoV1 } from './dto/login-auth.dto';
-import { ResLoginDtoV1 } from './dto/res-login.dto';
+import { AuthServiceV1 } from '@/src/v1/auth/auth.service';
+import { LoginAuthDtoV1, ResLoginDtoV1 } from '@/src/v1/auth/dto';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthControllerV1 {

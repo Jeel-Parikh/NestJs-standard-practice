@@ -12,16 +12,18 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 
+import { Serializer } from '@/src/common/interceptors';
 import { IPaginationRes, IResponse } from '@/src/common/interfaces';
-
-import { Serializer } from './../../common/interceptors';
-import { QueryParamsUserDtoV1, ResUserDtoV1 } from './dto';
-import { CreateUserDtoV1 } from './dto/create-user.dto';
-import { UpdateUserDtoV1 } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { EUsersRole } from './types/user.type';
-import { UsersServiceV1 } from './users.service';
-import { AuthenticationV1, RoleV1 } from '../auth/decorators';
+import { AuthenticationV1, RoleV1 } from '@/src/v1/auth/decorators';
+import {
+  QueryParamsUserDtoV1,
+  ResUserDtoV1,
+  CreateUserDtoV1,
+  UpdateUserDtoV1,
+} from '@/src/v1/users/dto';
+import { User } from '@/src/v1/users/entities/user.entity';
+import { EUsersRole } from '@/src/v1/users/types/user.type';
+import { UsersServiceV1 } from '@/src/v1/users/users.service';
 
 @Serializer(ResUserDtoV1)
 // @RoleV1(EUsersRole.ADMIN)  // Always place @Role above @Authentication bcz it is depends on @Authentication

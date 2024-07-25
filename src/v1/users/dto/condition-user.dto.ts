@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
 
-import { User } from '../entities/user.entity';
+import { User } from '@/src/v1/users/entities/user.entity';
 
 export class ConditionUserDtoV1 extends PartialType(User) {}
