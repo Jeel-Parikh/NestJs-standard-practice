@@ -1,18 +1,9 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  NestInterceptor,
-  UseInterceptors,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 import { map, Observable } from 'rxjs';
 
-export function Serializer(schema: any) {
-  return UseInterceptors(new SerializeInterceptor(schema));
-}
-
-class SerializeInterceptor implements NestInterceptor {
+export class SerializeInterceptor implements NestInterceptor {
   constructor(private schema: any) {}
   intercept(
     context: ExecutionContext,

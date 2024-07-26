@@ -1,6 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 
-import { Serializer } from '@/src/common/interceptors';
+import { Serializer } from '@/src/common/decorators';
 import { IResponse } from '@/src/common/interfaces';
 import { AuthServiceV1 } from '@/src/v1/auth/auth.service';
 import { LoginAuthDtoV1, ResLoginDtoV1 } from '@/src/v1/auth/dto';

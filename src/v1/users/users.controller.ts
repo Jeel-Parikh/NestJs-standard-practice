@@ -12,7 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 
-import { Serializer } from '@/src/common/interceptors';
+import { Serializer } from '@/src/common/decorators';
 import { IPaginationRes, IResponse } from '@/src/common/interfaces';
 import { AuthenticationV1, RoleV1 } from '@/src/v1/auth/decorators';
 import {
