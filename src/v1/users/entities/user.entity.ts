@@ -3,10 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Address } from '@/src/v1/addresses/entities';
 import { EUsersRole } from '@/src/v1/users/types/user.type';
 
 @Entity()
@@ -33,8 +35,11 @@ export class User {
 
   @Column({ type: 'enum', enum: EUsersRole, default: EUsersRole.USER })
   @IsNotEmpty({ message: 'userRole should not be empty' })
-  @IsEnum(EUsersRole)
+  @IsEnum(EUsersRole, { message: 'Invalid userRole' })
   userRole: EUsersRole;
+
+  @OneToOne((_type) => Address, (address) => address.user)
+  address: Address;
 
   @CreateDateColumn()
   createdAt: Date;

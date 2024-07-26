@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-import { ENV_VARIABLES } from '@/src/config';
+import { ENV_VARIABLES } from './env.config';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',

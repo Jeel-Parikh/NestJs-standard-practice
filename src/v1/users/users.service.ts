@@ -69,6 +69,9 @@ export class UsersServiceV1 {
     try {
       const user = await this.usersRepository.findOneOrFail({
         where: conditions,
+        relations: {
+          address: true,
+        },
         select,
       });
       return user;
