@@ -39,7 +39,7 @@ export class Address {
   @IsInt({ message: 'Value must be an integer' })
   @Min(100000, { message: 'Value must have 6 digits' })
   @Max(999999, { message: 'Value must have 6 digits' })
-  zipCode: string;
+  zipCode: number;
 
   @Exclude()
   @OneToOne((_type) => User, (user) => user.address, { onDelete: 'CASCADE' })
